@@ -1,97 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacker UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      font-family: 'Share Tech Mono', monospace;
+      color: #0F0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-      background-color: black;
-      overflow: hidden;
-      color: #0F0; /* Neon green text */
-      font-family: 'Courier New', monospace;
     }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
       z-index: -1;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 2;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 20px;
     }
 
     .title {
-      font-size: 24px;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 20px;
-      z-index: 2;
+      font-size: 22px;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
     }
 
     .btn {
-      --color: #00A97F;
-      --color2: rgb(10, 25, 30);
-      width: 200px;
-      padding: 0.8em 1.75em;
       background-color: transparent;
-      border-radius: 6px;
-      border: 0.3px solid var(--color);
-      transition: 0.5s;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      z-index: 1;
-      font-weight: 300;
-      font-size: 17px;
-      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      border: 1px solid #0F0;
+      color: #0F0;
+      padding: 10px 20px;
+      font-size: 16px;
       text-transform: uppercase;
-      color: var(--color);
-      margin-bottom: 10px;
-    }
-
-    .btn::after, .btn::before {
-      content: '';
-      display: block;
-      height: 100%;
-      width: 100%;
-      transform: skew(90deg) translate(-50%, -50%);
-      position: absolute;
-      inset: 50%;
-      left: 25%;
-      z-index: -1;
-      transition: 0.5s ease-out;
-      background-color: var(--color);
-    }
-
-    .btn::before {
-      top: -50%;
-      left: -25%;
-      transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
-    }
-
-    .btn:hover::before {
-      transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
-    }
-
-    .btn:hover::after {
-      transform: skew(45deg) translate(-50%, -50%);
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
     }
 
     .btn:hover {
-      color: var(--color2);
+      background-color: #0F0;
+      color: black;
+      box-shadow: 0 0 10px #0F0;
     }
 
-    .btn:active {
-      filter: brightness(0.7);
-      transform: scale(0.98);
+    @media (max-width: 600px) {
+      .title {
+        font-size: 18px;
+      }
+      .btn {
+        font-size: 14px;
+        margin: 8px;
+      }
     }
   </style>
 </head>
@@ -99,12 +83,14 @@
 
   <canvas id="matrix"></canvas>
 
-  <div class="title">© Product of 𝕍ø𝕣𝕥ë𝕩_𝕊𝕙ä𝕕ø𝕨 軎™</div>
-
-  <button onclick="window.open(`/qr`)" class="btn">QR Code</button>
-  <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
-  <button onclick="window.open(`https://github.com/OTAKUSYNTAX`)" class="btn">GitHub</button>
-  <button onclick="window.open(`https://whatsapp.com/channel/0029VaoOiuwDp2QH070eTE01`)" class="btn">WhatsApp</button>
+  <div class="container">
+    <img src="https://files.catbox.moe/yuu6kv.jpg" alt="Logo" class="logo" />
+    <div class="title">© Product of 𝕍ø𝕣𝕥ë𝕩_𝕊𝕙ä𝕕ø𝕨 軎™</div>
+    <button onclick="window.open('/qr')" class="btn">QR Code</button>
+    <button onclick="window.open('/pair')" class="btn">Pair Code</button>
+    <button onclick="window.open('https://t.me/Shadow_Syndicate2')" class="btn">Telegram</button>
+    <button onclick="window.open('https://whatsapp.com/channel/0029Vb4dhkH5PO19ricbl42S')" class="btn">WhatsApp</button>
+  </div>
 
   <script>
     const canvas = document.getElementById('matrix');
@@ -113,7 +99,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
+    const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
     const matrix = letters.split('');
 
     const fontSize = 16;
