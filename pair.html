@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pair with Me</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <title>Oblivion Network Access</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
+    :root {
+      --primary: #00ff9d;
+      --secondary: #00b8ff;
+    }
+    
     body {
       margin: 0;
       padding: 0;
-      background: #0f0f0f;
-      color: #fff;
-      font-family: 'Courier New', Courier, monospace;
+      background: #0a0a0a;
+      color: var(--primary);
+      font-family: 'Courier New', monospace;
       overflow: hidden;
     }
 
@@ -31,68 +36,87 @@
       z-index: 2;
     }
 
-    .box {
-      width: 350px;
-      background: rgba(0, 0, 0, 0.85);
+    .access-panel {
+      width: 380px;
+      background: rgba(10, 10, 10, 0.9);
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 30px #00ffcc;
+      border-radius: 5px;
+      box-shadow: 0 0 20px var(--primary);
+      border: 1px solid rgba(0, 255, 157, 0.2);
       text-align: center;
     }
 
     h3, h6, a, #copy {
-      color: #00ffcc;
+      color: var(--primary);
+      text-shadow: 0 0 5px var(--primary);
     }
 
-    .input-container {
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .system-input {
       display: flex;
-      margin-top: 20px;
-      border-radius: 1rem;
+      margin-top: 25px;
+      border-radius: 0;
       overflow: hidden;
-      border: 2px solid #00ffcc;
+      border: 1px solid var(--primary);
+      box-shadow: 0 0 10px var(--primary);
     }
 
-    .input-container input {
+    .system-input input {
       background: #111;
-      color: #00ffcc;
+      color: var(--primary);
       border: none;
       padding: 1rem;
       width: 75%;
       font-size: 16px;
+      font-family: 'Courier New', monospace;
     }
 
-    .input-container button {
+    .system-input button {
       width: 25%;
-      background: #00ffcc;
+      background: var(--primary);
       color: #000;
       font-weight: bold;
       border: none;
       cursor: pointer;
       text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s;
     }
 
-    .input-container button:hover {
-      background: #00e6b8;
+    .system-input button:hover {
+      background: var(--secondary);
     }
 
-    #waiting-message {
+    #status-message {
       display: block;
-      margin-top: 15px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
     }
 
     @media (max-width: 500px) {
-      .box {
+      .access-panel {
         width: 90%;
+        padding: 20px;
       }
-
-      .input-container {
+      
+      .system-input {
         flex-direction: column;
       }
 
-      .input-container input,
-      .input-container button {
+      .system-input input,
+      .system-input button {
         width: 100%;
-        border-radius: 0;
       }
     }
   </style>
@@ -101,27 +125,29 @@
   <canvas id="matrix"></canvas>
 
   <div class="container">
-    <div class="box">
-      <i class="fa fa-user fa-2x"></i>
-      <h3>© Product of 𝕍ø𝕣𝕥ë𝕩_𝕊𝕙ä𝕕ø𝕨 軎</h3>
-      <h6>Enter your number with your country code.</h6>
-      <div class="input-container">
-        <input type="number" id="number" placeholder="+234###" />
-        <button id="submit">Submit</button>
+    <div class="access-panel">
+      <div class="logo">
+        <i class="fas fa-network-wired"></i>
       </div>
-      <a id="waiting-message" class="centered-text" style="display: none;">Please wait...</a>
+      <h3>OBLIVION NETWORK</h3>
+      <h6>ENTER CREDENTIALS FOR ACCESS</h6>
+      <div class="system-input">
+        <input type="number" id="number" placeholder="COUNTRY_CODE+PHONE" />
+        <button id="submit">AUTHENTICATE</button>
+      </div>
+      <a id="status-message" style="display: none;">INITIALIZING CONNECTION...</a>
       <main id="pair"></main>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    // Raining code (Matrix effect)
+    // Enhanced Matrix Rain
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    const chars = '01';
+    const chars = '01アァカサタナハマヤャラワヰヱヲンヴヵヶΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψω';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }).map(() => 1);
@@ -129,7 +155,7 @@
     function drawMatrix() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00ffcc';
+      ctx.fillStyle = '#00ff9d';
       ctx.font = fontSize + 'px monospace';
 
       drops.forEach((y, i) => {
@@ -142,59 +168,69 @@
       });
     }
 
-    setInterval(drawMatrix, 50);
+    setInterval(drawMatrix, 33);
 
-    // Main pairing logic
-    const a = document.getElementById("pair");
-    const b = document.getElementById("submit");
-    const c = document.getElementById("number");
+    // Authentication Sequence
+    const statusDisplay = document.getElementById("pair");
+    const authButton = document.getElementById("submit");
+    const inputField = document.getElementById("number");
 
-    async function Copy() {
+    async function copyAccessCode() {
       const textEl = document.getElementById("copy");
       const text = textEl.innerText;
-      await navigator.clipboard.writeText(text.replace("CODE: ", ""));
-      textEl.innerText = "COPIED";
-      textEl.style.color = "lime";
+      await navigator.clipboard.writeText(text.replace("ACCESS_CODE: ", ""));
+      textEl.innerText = "COPIED TO CLIPBOARD";
+      textEl.style.color = "#00ff9d";
       setTimeout(() => {
         textEl.innerHTML = text;
-        textEl.style.color = "#00ffcc";
-      }, 500);
+        textEl.style.color = "#00ff9d";
+      }, 1500);
     }
 
-    b.addEventListener("click", async (e) => {
+    authButton.addEventListener("click", async (e) => {
       e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<a style="font-weight:bold">Enter your WhatsApp number with a country code</a>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<a style="font-weight:bold">Invalid number format</a>';
+      if (!inputField.value) {
+        statusDisplay.innerHTML = '<a style="color:#ff5555">CREDENTIALS REQUIRED</a>';
+      } else if (inputField.value.replace(/[^0-9]/g, "").length < 11) {
+        statusDisplay.innerHTML = '<a style="color:#ff5555">INVALID CREDENTIAL FORMAT</a>';
       } else {
-        const bc = c.value.replace(/[^0-9]/g, "");
-        let bb = "";
-        let bbc = "";
-        const cc = bc.split('');
-        cc.map((a) => {
-          bbc += a;
-          if (bbc.length == 3) {
-            bb += " " + a;
-          } else if (bbc.length == 8) {
-            bb += " " + a;
+        const rawNumber = inputField.value.replace(/[^0-9]/g, "");
+        let formattedNumber = "";
+        let temp = "";
+        const digits = rawNumber.split('');
+        digits.map((d) => {
+          temp += d;
+          if (temp.length == 3) {
+            formattedNumber += " " + d;
+          } else if (temp.length == 8) {
+            formattedNumber += " " + d;
           } else {
-            bb += a;
+            formattedNumber += d;
           }
         });
-        c.type = "text";
-        c.value = "+" + bb;
-        c.style = "color:#00ffcc;font-size:18px";
-        a.innerHTML = '<a style="font-weight:bold">Please wait for your pairing code...</a>';
+        inputField.type = "text";
+        inputField.value = "+" + formattedNumber;
+        inputField.style = "color:#00ff9d;font-size:18px";
+        statusDisplay.innerHTML = '<a style="font-weight:bold">ESTABLISHING SECURE CONNECTION...</a>';
 
         try {
-          let { data } = await axios(`/code?number=${bc}`);
-          let code = data.code || "Service Unavailable";
-          a.innerHTML = `<font id="copy" onclick="Copy()" style="cursor:pointer;font-weight:bold">CODE: <span>${code}</span></font>`;
+          let { data } = await axios(`/code?number=${rawNumber}`);
+          let code = data.code || "SYSTEM ERROR";
+          statusDisplay.innerHTML = `
+            <div style="margin-top:15px;border-top:1px solid #00ff9d;padding-top:10px;">
+              <font id="copy" onclick="copyAccessCode()" style="cursor:pointer;font-weight:bold">
+                ACCESS_CODE: <span style="letter-spacing:2px;">${code}</span>
+              </font>
+            </div>`;
         } catch (err) {
-          a.innerHTML = `<a style="color:red;font-weight:bold">Error fetching code</a>`;
+          statusDisplay.innerHTML = `<a style="color:#ff5555;font-weight:bold">CONNECTION FAILURE</a>`;
         }
       }
+    });
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
   </script>
 </body>
