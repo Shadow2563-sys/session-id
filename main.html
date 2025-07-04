@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hacker UI</title>
+  <title>Oblivion Network</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #00ff9d;
+      --secondary: #00b8ff;
+    }
+    
     body {
       margin: 0;
       padding: 0;
-      background: black;
+      background: #000;
       overflow: hidden;
       font-family: 'Share Tech Mono', monospace;
-      color: #0F0;
+      color: var(--primary);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -27,13 +32,16 @@
       z-index: -1;
     }
 
-    .container {
+    .terminal {
       text-align: center;
       z-index: 2;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      box-shadow: 0 0 10px #0f0;
+      padding: 30px;
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 5px;
+      box-shadow: 0 0 20px var(--primary);
+      border: 1px solid rgba(0, 255, 157, 0.2);
+      max-width: 500px;
+      width: 90%;
     }
 
     .logo {
@@ -41,55 +49,65 @@
       height: 100px;
       object-fit: contain;
       margin-bottom: 20px;
+      filter: drop-shadow(0 0 5px var(--primary));
     }
 
     .title {
-      font-size: 22px;
-      margin-bottom: 25px;
-      letter-spacing: 1px;
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 5px var(--primary);
     }
 
-    .btn {
+    .access-btn {
       background-color: transparent;
-      border: 1px solid #0F0;
-      color: #0F0;
-      padding: 10px 20px;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 25px;
       font-size: 16px;
       text-transform: uppercase;
       cursor: pointer;
       margin: 10px;
-      border-radius: 5px;
+      border-radius: 0;
       transition: all 0.3s ease;
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
     }
 
-    .btn:hover {
-      background-color: #0F0;
-      color: black;
-      box-shadow: 0 0 10px #0F0;
+    .access-btn:hover {
+      background-color: var(--primary);
+      color: #000;
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: rgba(0, 255, 157, 0.7);
     }
 
     @media (max-width: 600px) {
       .title {
-        font-size: 18px;
+        font-size: 1.2rem;
       }
-      .btn {
+      .access-btn {
         font-size: 14px;
-        margin: 8px;
+        padding: 10px 20px;
       }
     }
   </style>
 </head>
 <body>
-
   <canvas id="matrix"></canvas>
 
-  <div class="container">
-    <img src="https://files.catbox.moe/yuu6kv.jpg" alt="Logo" class="logo" />
-    <div class="title">© Product of 𝕍ø𝕣𝕥ë𝕩_𝕊𝕙ä𝕕ø𝕨 軎™</div>
-    <button onclick="window.open('/qr')" class="btn">QR Code</button>
-    <button onclick="window.open('/pair')" class="btn">Pair Code</button>
-    <button onclick="window.open('https://t.me/Shadow_Syndicate2')" class="btn">Telegram</button>
-    <button onclick="window.open('https://whatsapp.com/channel/0029Vb4dhkH5PO19ricbl42S')" class="btn">WhatsApp</button>
+  <div class="terminal">
+    <img src="https://files.catbox.moe/yuu6kv.jpg" alt="Oblivion Logo" class="logo" />
+    <div class="title">OBLIVION NETWORK</div>
+    <button onclick="window.open('/qr')" class="access-btn">QR ACCESS</button>
+    <button onclick="window.open('/pair')" class="access-btn">PAIR PROTOCOL</button>
+    <button onclick="window.open('https://t.me/Shadow_Syndicate2')" class="access-btn">DATA STREAM</button>
+    <button onclick="window.open('https://whatsapp.com/channel/0029Vb4dhkH5PO19ricbl42S')" class="access-btn">COMMS CHANNEL</button>
+    <div class="footer">SYSTEM v3.2.1 | SECURE CONNECTION</div>
   </div>
 
   <script>
@@ -99,8 +117,8 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
-    const matrix = letters.split('');
+    const chars = '01アァカサタナハマヤャラワヰヱヲンヴヵヶΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψω@#$%^&*';
+    const matrix = chars.split('');
 
     const fontSize = 16;
     const columns = canvas.width / fontSize;
@@ -110,7 +128,7 @@
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#0F0';
+      ctx.fillStyle = '#00ff9d';
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
@@ -124,13 +142,12 @@
       }
     }
 
-    setInterval(drawMatrix, 50);
+    setInterval(drawMatrix, 33);
 
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
   </script>
-
 </body>
 </html>
